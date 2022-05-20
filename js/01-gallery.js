@@ -1,10 +1,11 @@
 import { galleryItems } from "./gallery-items.js";
 const galleryRefs = document.querySelector(".gallery");
-const newElement = createElement(galleryItems);
+galleryRefs.addEventListener("click", onModalClick);
+galleryRefs.insertAdjacentHTML("beforeend", createElement(galleryItems));
 
-galleryRefs.insertAdjacentHTML("beforeend", newElement);
-function createElement(galleryItems) {
-  return galleryItems
+
+function createElement(gallery) {
+  return gallery
     .map(({ preview, original, description }) => {
       return `<div class="gallery__item">
   <a class="gallery__link" href="${original}">
@@ -18,23 +19,27 @@ function createElement(galleryItems) {
 </div>`;
     })
     .join("");
-}
-const originImgClick = (e) => {
+};
+
+function onModalClick(e) {
+  
   e.preventDefoult();
-  console.log(e);
+  console.log(e.target);
   // console.log(e.target.classList.contains('.gallery__image'));
   const targetElement = e.target.classList.contains("gallery__image");
   if (!targetElement) {
     return;
   } else {
-    const instance = basicLightbox.create(`
+  const instance = basicLightbox.create(`
 	<img
       src="${e.target.dataset.source}"
-      alt="${description}"
+      width="800" height="600"
     />
 `);
     instance.show();
   }
 };
-galleryRefs.addEventListener("click", originImgClick);
+
+
+
 
