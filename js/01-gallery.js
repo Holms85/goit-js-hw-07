@@ -21,6 +21,7 @@ function createElement(gallery) {
     .join("");
 }
 let instance;
+
 function onModalClick(e) {
   e.preventDefault();
   if (!e.target.classList.contains("gallery__image")) {
@@ -32,6 +33,7 @@ function onModalClick(e) {
       
     />
 `);
+  
   window.addEventListener("keydown", clotheEscModal);
   instance.show();
 }
