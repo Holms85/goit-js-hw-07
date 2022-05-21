@@ -1,8 +1,8 @@
 import { galleryItems } from "./gallery-items.js";
 const galleryRefs = document.querySelector(".gallery");
 galleryRefs.addEventListener("click", onModalClick);
-galleryRefs.insertAdjacentHTML("beforeend", createElement(galleryItems));
 
+galleryRefs.insertAdjacentHTML("beforeend", createElement(galleryItems));
 
 function createElement(gallery) {
   return gallery
@@ -19,27 +19,26 @@ function createElement(gallery) {
 </div>`;
     })
     .join("");
-};
-
+}
+let instance;
 function onModalClick(e) {
-  
-  e.preventDefoult();
-  console.log(e.target);
-  // console.log(e.target.classList.contains('.gallery__image'));
-  const targetElement = e.target.classList.contains("gallery__image");
-  if (!targetElement) {
+  e.preventDefault();
+  if (!e.target.classList.contains("gallery__image")) {
     return;
-  } else {
-  const instance = basicLightbox.create(`
+  }
+  instance = basicLightbox.create(`
 	<img
       src="${e.target.dataset.source}"
-      width="800" height="600"
+      
     />
 `);
-    instance.show();
+  window.addEventListener("keydown", clotheEscModal);
+  instance.show();
+}
+
+function clotheEscModal(e) {
+  if (e.key === "Escape") {
+    instance.close();
+    window.removeEventListener("keydown", clotheEscModal);
   }
-};
-
-
-
-
+}
